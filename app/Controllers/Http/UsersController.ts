@@ -13,12 +13,6 @@ export default class UsersController {
   public async store ({ request }: HttpContextContract) {
     const data = await request.validate(CreateUserValidator)
 
-    const userAlreadyExists = await User.findBy('email', data.email)
-
-    if(userAlreadyExists) {
-        throw new Error('User already exists')
-    }
-
     const user = await User.create(data)
 
     return user
