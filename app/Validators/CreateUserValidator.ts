@@ -30,7 +30,8 @@ export default class CreateUserValidator {
 	password: schema.string({trim: true}),
 	phone_number: schema.number(),
 	birth_date: schema.date(),
-	is_admin: schema.boolean.optional()
+	is_admin: schema.boolean.optional(),
+	address_id: schema.number([rules.exists({ table: 'addresses', column: 'id' })])
   })
 
 	/**

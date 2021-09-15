@@ -26,13 +26,18 @@ export default class User extends BaseModel {
   @column()
   public is_admin: boolean
 
+  @column()
+  public address_id: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Address)
+  @hasOne(() => Address, {
+    foreignKey: 'address_id'
+  })
   public address: HasOne<typeof Address>
 
   @beforeSave()
