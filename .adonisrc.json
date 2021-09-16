@@ -17,12 +17,14 @@
     "./start/routes/addresses/routes",
     "./start/routes/categories/routes",
     "./start/routes/users/routes",
+    "./start/routes/login/routes",
     "./start/kernel"
   ],
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
-    "@adonisjs/lucid"
+    "@adonisjs/lucid",
+    "@adonisjs/auth"
   ],
   "aceProviders": [
     "@adonisjs/repl"
