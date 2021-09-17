@@ -30,7 +30,6 @@ export default class UpdateUserValidator {
 	password: schema.string.optional({trim: true}),
 	phone_number: schema.number.optional(),
 	birth_date: schema.date.optional(),
-	is_admin: schema.boolean.optional(),
 	address_id: schema.number.optional([rules.exists({ table: 'addresses', column: 'id' })])
   })
 
