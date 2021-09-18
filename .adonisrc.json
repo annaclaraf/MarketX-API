@@ -19,6 +19,7 @@
     "./start/routes/users/routes",
     "./start/routes/login/routes",
     "./start/routes/admin/routes",
+    "./start/routes/products/routes",
     "./start/kernel"
   ],
   "providers": [
