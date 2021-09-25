@@ -4,8 +4,15 @@ import CreateProductValidator from 'App/Validators/CreateProductValidator'
 import UpdateProductValidator from 'App/Validators/UpdateProductValidator'
 
 export default class ProductsController {
-  public async index ({}: HttpContextContract) {
-    const products = await Product.all()
+  public async index ({ request }: HttpContextContract) {
+    const { page, perPage } = request.qs()
+    
+    const filters = request.only(['name', 'category', 'priceRange', 'brand'])
+
+    const products = await Product.query()
+      .preload('category')
+      .filter(filters)
+      .paginate(page, perPage)
 
     return products
   }
