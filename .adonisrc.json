@@ -18,6 +18,9 @@
     "./start/routes/categories/routes",
     "./start/routes/users/routes",
     "./start/routes/login/routes",
+    "./start/routes/admin/routes",
+    "./start/routes/products/routes",
+    "./start/routes/purchases/routes",
     "./start/kernel"
   ],
   "providers": [
