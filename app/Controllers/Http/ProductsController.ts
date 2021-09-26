@@ -22,11 +22,15 @@ export default class ProductsController {
 
     const product = await Product.create(data)
 
+    await product.load('category')
+
     return product
   }
 
   public async show ({ params }: HttpContextContract) {
     const product = await Product.findByOrFail('id', params.id)
+
+    await product.load('category')
 
     return product
   }
@@ -37,6 +41,8 @@ export default class ProductsController {
     const product = await Product.findByOrFail('id', params.id)
 
     await product.merge(data).save()
+
+    await product.load('category')
 
     return product
   }

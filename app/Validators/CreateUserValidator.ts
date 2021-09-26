@@ -29,8 +29,7 @@ export default class CreateUserValidator {
 	email: schema.string({trim: true}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
 	password: schema.string({trim: true}),
 	phone_number: schema.number(),
-	birth_date: schema.date(),
-	address_id: schema.number([rules.exists({ table: 'addresses', column: 'id' })])
+	birth_date: schema.date()
   })
 
 	/**

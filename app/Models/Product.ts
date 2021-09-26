@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
 
@@ -28,7 +28,7 @@ export default class Product extends compose(BaseModel, Filterable) {
   public price: number
 
   @column()
-  public category_id: number
+  public categoryId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -36,8 +36,6 @@ export default class Product extends compose(BaseModel, Filterable) {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Category, {
-    foreignKey: 'category_id'
-  })
-  public category: HasOne<typeof Category>
+  @belongsTo(() => Category)
+  public category: BelongsTo<typeof Category>
 }

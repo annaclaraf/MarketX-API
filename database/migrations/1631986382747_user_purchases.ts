@@ -24,7 +24,7 @@ export default class UserPurchases extends BaseSchema {
         .onDelete('SET NULL')
 
       table.integer('quantity').notNullable()
-      table.float('total_price')
+      table.float('total_price').notNullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

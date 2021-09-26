@@ -14,6 +14,9 @@ export default class UserPurchasesController {
 
     const purchases = await UserPurchase.findByOrFail('user_id', user_id)
 
+    await purchases.load('user')
+    await purchases.load('product')
+
     return purchases
   }
 
@@ -34,11 +37,11 @@ export default class UserPurchasesController {
     
     const total_price = quantity * price
     
-    const user_id = auth.user?.id 
+    const userId = auth.user?.id 
 
     const purchase = await UserPurchase.create({
-      user_id,
-      product_id,
+      userId,
+      productId: product_id,
       quantity,
       total_price
     })
@@ -46,12 +49,19 @@ export default class UserPurchasesController {
     const updatedStock = stockQuantity - quantity
     
     await product.merge({ stock_quantity: updatedStock }).save()
-    
+
+    await purchase.load('user')
+    await purchase.load('product')
+
     return purchase 
   }
 
-  public async show ({ params }: HttpContextContract) {
-    const purchase = await UserPurchase.findByOrFail('id', params.id)
+  public async show ({ params, auth }: HttpContextContract) {
+    const user_id = auth.user!.id
+
+    const purchase = await UserPurchase.query() 
+      .where('id', params.id)
+      .where('user_id', user_id)
 
     return purchase
   }
