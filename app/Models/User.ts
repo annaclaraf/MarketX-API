@@ -1,6 +1,6 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 
 import Address from './Address'
 
@@ -27,7 +27,7 @@ export default class User extends BaseModel {
   public is_admin: boolean
 
   @column()
-  public address_id: number
+  public addressId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -35,10 +35,8 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Address, {
-    foreignKey: 'address_id'
-  })
-  public address: HasOne<typeof Address>
+  @belongsTo(() => Address)
+  public address: BelongsTo<typeof Address>
 
   @beforeSave()
   public static async hashPassword(user: User) {

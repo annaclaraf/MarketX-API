@@ -4,8 +4,10 @@ import CreateCategoryValidator from 'App/Validators/CreateCategoryValidator'
 import UpdateCategoryValidator from 'App/Validators/UpdateCategoryValidator'
 
 export default class CategoriesController {
-  public async index({ }: HttpContextContract) {
-    const categories = await Category.all()
+  public async index({ request }: HttpContextContract) {
+    const { page } = request.all()
+
+    const categories = await Category.query().paginate(page, 10)
 
     return categories
   }

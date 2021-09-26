@@ -13,8 +13,7 @@ export default class UserAdminSeeder extends BaseSeeder {
         password: 'admin',
         phone_number: 12345678,
         birth_date: DateTime.fromISO('2000-11-02'),
-        is_admin: true,
-        address_id: 2
+        is_admin: true
       }
     ])
   }

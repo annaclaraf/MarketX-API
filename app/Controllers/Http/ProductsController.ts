@@ -4,8 +4,10 @@ import CreateProductValidator from 'App/Validators/CreateProductValidator'
 import UpdateProductValidator from 'App/Validators/UpdateProductValidator'
 
 export default class ProductsController {
-  public async index ({}: HttpContextContract) {
-    const products = await Product.all()
+  public async index ({ request }: HttpContextContract) {
+    const { page } = request.all()
+
+    const products = await Product.query().preload('category').paginate(page, 10)
 
     return products
   }
@@ -15,11 +17,15 @@ export default class ProductsController {
 
     const product = await Product.create(data)
 
+    await product.load('category')
+
     return product
   }
 
   public async show ({ params }: HttpContextContract) {
     const product = await Product.findByOrFail('id', params.id)
+
+    await product.load('category')
 
     return product
   }
@@ -30,6 +36,8 @@ export default class ProductsController {
     const product = await Product.findByOrFail('id', params.id)
 
     await product.merge(data).save()
+
+    await product.load('category')
 
     return product
   }

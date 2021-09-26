@@ -20,7 +20,7 @@ export default class Users extends BaseSchema {
       table.string('password').notNullable()
       table.integer('phone_number').notNullable()
       table.date('birth_date').notNullable()
-      table.boolean('is_admin')
+      table.boolean('is_admin').notNullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

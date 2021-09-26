@@ -15,7 +15,7 @@ export default class Products extends BaseSchema {
         .onUpdate('SET NULL')
         .onDelete('SET NULL')
       
-      table.string('name').unique().notNullable()
+      table.string('name').notNullable()
       table.string('description').notNullable()
       table.string('brand').notNullable()
       table.integer('stock_quantity').notNullable()

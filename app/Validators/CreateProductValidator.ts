@@ -25,7 +25,7 @@ export default class CreateProductValidator {
 	 *    ```
 	 */
   public schema = schema.create({
-	name: schema.string({trim: true}, [rules.unique({ table: 'products', column: 'name' })]),
+	name: schema.string({trim: true}),
 	description: schema.string({trim: true}),
 	brand: schema.string({trim: true}),
 	stock_quantity: schema.number(),
