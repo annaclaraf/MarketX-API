@@ -4,6 +4,7 @@ Route.group(() => {
     Route.post('/products', 'ProductsController.store')
     Route.put('/products/:id', 'ProductsController.update')
     Route.delete('/products/:id', 'ProductsController.destroy')
+    Route.post('/products/:id/upload', 'ProductsController.upload')
 }).middleware(['auth', 'isAdmin'])
 
 Route.get('/products', 'ProductsController.index')

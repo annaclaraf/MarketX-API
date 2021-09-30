@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo, hasMany, HasMany} from '@ioc:Adonis/Lucid/Orm'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
 
 import Category from './Category'
 import ProductFilter from './filters/Productfilter'
+import Image from './Image'
 
 export default class Product extends compose(BaseModel, Filterable) {
   public static $filter = () => ProductFilter
@@ -38,4 +39,7 @@ export default class Product extends compose(BaseModel, Filterable) {
 
   @belongsTo(() => Category)
   public category: BelongsTo<typeof Category>
+
+  @hasMany(() => Image)
+  public images: HasMany<typeof Image>
 }

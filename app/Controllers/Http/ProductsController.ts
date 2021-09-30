@@ -1,4 +1,6 @@
+import Application from '@ioc:Adonis/Core/Application'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Image from 'App/Models/Image'
 import Product from 'App/Models/Product'
 import CreateProductValidator from 'App/Validators/CreateProductValidator'
 import UpdateProductValidator from 'App/Validators/UpdateProductValidator'
@@ -11,6 +13,7 @@ export default class ProductsController {
 
     const products = await Product.query()
       .preload('category')
+      .preload('images')
       .filter(filters)
       .paginate(page, perPage)
 
@@ -31,6 +34,7 @@ export default class ProductsController {
     const product = await Product.findByOrFail('id', params.id)
 
     await product.load('category')
+    await product.load('images')
 
     return product
   }
@@ -53,5 +57,26 @@ export default class ProductsController {
     await product.delete()
 
     return product
+  }
+
+  public async upload ({ request, params }: HttpContextContract) {
+    const product = await Product.findByOrFail('id', params.id)
+    
+    const images = request.files('images')
+
+    if (images.length === 0) {
+      throw new Error ('Invalid image')
+    }
+  
+    for (let image of images) {
+      await image.move(Application.tmpPath('uploads'))
+      
+      await Image.create({
+        productId: product.id,
+        path: image.fileName
+      })
+    }
+
+    return "Image upload successfully"
   }
 }
